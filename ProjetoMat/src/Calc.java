@@ -8,48 +8,54 @@ public class Calc {
 
         Numero n1 = new Numero();
         Numero n2 = new Numero();
-        Numero resp = new Numero();
+
         String opc="S";
-        Operacoes operacaoEscolhida = new Operacoes();
+        Operacao operacaoEscolhida = new Operacao();
 
-        while(opc.equals("s") || opc.equals("S")) {
+        while(opc.equalsIgnoreCase("s")) {
+            Numero resp = null;
+            boolean validaN1 = false;
+            boolean validaN2 = false;
 
-            System.out.printf("%nDigite o valor 1: ");
-            n1.setValor(scanner.nextInt());
+            while (!validaN1) {
 
-            System.out.printf("%nDigite o valor 2: ");
-            n2.setValor(scanner.nextInt());
+                try {
+                    System.out.printf("%nDigite o valor 1: ");
+                    n1.setValor(scanner.nextInt());
+                    validaN1 = true;
 
-            System.out.printf("%nQual a operação que será feita?(+ - * /): ");
+                } catch (Exception e) {
+                    System.out.println("O texto digitado não é valido, por favor digite um número.");
+                    scanner.next();
 
+                }
 
-            operacaoEscolhida.setOperacao(scanner.next());
-
-
-
-            /*if (operacaoEscolhida.getOperacao().equals("+")) {
-
-                resp.setValor(n1.getValor() + n2.getValor());
-                System.out.printf("%nA Soma de %d com %d é igual a %d"
-                        , n1.getValor(), n2.getValor(), resp.getValor());
-
-            }else if (operacaoEscolhida.getOperacao().equals("-")) {
-                resp.setValor(n1.getValor() - n2.getValor());
-                System.out.printf("%nA Subtração de %d com %d é igual a %d"
-                        , n1.getValor(), n2.getValor(), resp.getValor());
-
-            } else if (operacaoEscolhida.getOperacao().equals("*")) {
-                resp.setValor(n1.getValor() * n2.getValor());
-                System.out.printf("%nA Multiplicação de %d com %d é igual a %d"
-                        , n1.getValor(), n2.getValor(), resp.getValor());
-            }else {
-                resp.setValor(n1.getValor() / n2.getValor());
-                System.out.printf("%nA Divisão de %d com %d é igual a %d"
-                        , n1.getValor(), n2.getValor(), resp.getValor());
             }
-           */
 
-            System.out.printf("%nDeseja fazer outro calculo?");
+            while (!validaN2) {
+
+                try {
+                    System.out.printf("%nDigite o valor 2: ");
+                    n2.setValor(scanner.nextInt());
+                    validaN2 = true;
+
+                } catch (Exception e) {
+                    System.out.println("O texto digitado não é valido, por favor digite um número.");
+                    scanner.next();
+
+                }
+
+            }
+
+            while(resp == null){
+                System.out.printf("%nEscolha a operação que será feita?(+ - * /): ");
+
+                resp = operacaoEscolhida.getResultadoOperacao(n1, n2, new Operacao(scanner.next()));
+            }
+
+            System.out.println("O resultado da operação é: " + resp.getValor());
+
+            System.out.printf("%nDeseja fazer outro cálculo? S ou N%n");
             opc = scanner.next();
             System.out.printf("%n");
         }
